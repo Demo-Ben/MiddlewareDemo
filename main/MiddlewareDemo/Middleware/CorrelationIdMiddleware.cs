@@ -2,6 +2,10 @@
 
 namespace MiddlewareDemo.Middleware
 {
+
+    // A custom middleware is just a class with RequestDelegate next in the constructor
+    // and an Invoke/InvokeAsync(HttpContext) method, registered in the pipeline in the correct order.
+    // Everything else—logging, headers, auth, events—is just what you choose to do inside that method.
     public class CorrelationIdMiddleware
     {
         private const string CorrelationIdHeader = "X-Correlation-ID";
