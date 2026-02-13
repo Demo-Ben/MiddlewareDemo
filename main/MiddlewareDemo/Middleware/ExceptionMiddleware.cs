@@ -21,19 +21,20 @@ namespace MiddlewareDemo.Middleware
             }
             catch (Exception ex)
             {
+                Console.WriteLine($"Incoming request with error {0}: {ex.InnerException}");
                 await HandleExceptionAsync(context, ex);
             }
         }
 
-        private static Task HandleExceptionAsync(HttpContext context, Exception exception)
+        private static Task HandleExceptionAsync(HttpContext context, Exception ex)
         {
             context.Response.ContentType = "application/json";
             context.Response.StatusCode = (int)HttpStatusCode.InternalServerError;
 
             var result = Newtonsoft.Json.JsonConvert.SerializeObject(new
-            {
-                error = exception.Message
-            });
+                        {
+                            error = ex.Message
+                        });
 
             return context.Response.WriteAsync(result);
         }
